@@ -11,9 +11,9 @@
             <div class = "user-profile__follower-count">
                 <strong>Followers:</strong> {{ followers }}
             </div>
-            <form class="user-profile__create-twoot" @submit.prevent="createNewTwoot"> 
-                <label for="newTwoot"><strong>New Twoot</strong></label>
-                <textarea id="newTwoot" rows="3" v-model="newTwootContent" />
+            <form class="user-profile__create-twoot" @submit.prevent="createNewTwoot" :class="{ '--exceeded': newTwootCharacterCount > 180  }"> 
+                <label for="newTwoot"><strong>New Twoot</strong> ({{ newTwootCharacterCount }}/180)</label>
+                <textarea id="newTwoot" rows="4" v-model="newTwootContent" />
                 <div class="user-profile__create-twoot-type">
                     <label for="newTwootType"><strong>Type: </strong></label>
                     <select id="newTwootType" v-model="selectedTwootType">
@@ -72,7 +72,10 @@ export default {
   },
   computed: {
     fullName() {
-      return `${this.user.firstName} ${this.user.lastName}`
+        return `${this.user.firstName} ${this.user.lastName}`
+    },
+    newTwootCharacterCount() {
+        return this.newTwootContent.length
     }
   },
   watch: {
@@ -85,7 +88,7 @@ export default {
   },
   methods: {
     followUser() {
-      this.followers++
+        this.followers++
     },
     toggleFavorite(id) {
         console.log(`Favorited tweet with id ${id}`)
@@ -106,36 +109,53 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
 .user-profile {
     display: grid;
     grid-template-columns: 1fr 3fr;
     width: 100%;
     padding: 50px 5%;
+
+    .user-profile__user-panel {
+        display: flex;
+        flex-direction: column;
+        margin-right: 50px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid #DFE3E8;
+
+        .user-profile__admin-badge {
+            background: rebeccapurple;
+            border-radius: 6px;
+            margin-right: auto;
+            padding: 4px 6px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .user-profile__create-twoot {
+            display: flex;
+            flex-direction: column;
+            padding-top: 16px;
+
+            &.--exceeded {
+                color: red;
+                border-color: red;
+                button {
+                    border: none;
+                    color: white;
+                    background-color: red;
+                }
+            }
+        }
+    }
+
+    .user-profile__twoots-wrapper {
+        display: grid;
+        grid-gap: 16px;
+    }
 }
 
-.user-profile__user-panel {
-    display: flex;
-    flex-direction: column;
-    margin-right: 50px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 5px;
-    border: 1px solid #DFE3E8;
-}
-
-.user-profile__admin-badge {
-    background: rebeccapurple;
-    border-radius: 6px;
-    margin-right: auto;
-    padding: 4px 6px;
-    color: white;
-    font-weight: bold;
-}
-
-.user-profile__create-twoot {
-    display: flex;
-    flex-direction: column;
-    padding-top: 16px;
-}
 </style>

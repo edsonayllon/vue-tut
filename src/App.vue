@@ -16,7 +16,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,4 +26,5 @@ export default {
   min-height: 100vh;
   background-color: #F3F5FA;
 }
+
 </style>
