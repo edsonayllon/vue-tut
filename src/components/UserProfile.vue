@@ -2,14 +2,19 @@
     <div class = "user-profile">
         <div class = "user-profile__user-panel">
             <h1>@{{ user.username }}</h1>
-            <div class="user-profile__admin-badge" v-if = "user.isAdmin">
+            <div class = "user-profile__admin-badge" v-if = "user.isAdmin">
                 Admin
             </div>
-            <div class="user-profile__admin-badge" v-else>
+            <div class = "user-profile__admin-badge" v-else>
                 Not Admin
             </div>
             <div class = "user-profile__follower-count">
-            <strong>Followers:</strong> {{ followers }}
+                <strong>Followers:</strong> {{ followers }}
+            </div>
+        </div>
+        <div class = "user-profile__twoots-wrapper">
+            <div class = "user-profile__twoot" v-for = "twoot in user.twoots" v-bind:key="twoot.id"> 
+                {{ twoot.content }}
             </div>
         </div>
     </div>
@@ -27,7 +32,11 @@ export default {
         firstName: 'Edson',
         lastName: 'Ayllon',
         email: 'mail@edsonayllon.com',
-        isAdmin: true
+        isAdmin: true,
+        twoots: [
+          { id: 1, content: 'Twotter is amazing!' },
+          { id: 2, content: "Don't forget to follow" }
+        ]
       }
     }
   },
