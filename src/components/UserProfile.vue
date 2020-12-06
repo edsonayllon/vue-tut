@@ -13,16 +13,25 @@
             </div>
         </div>
         <div class = "user-profile__twoots-wrapper">
-            <div class = "user-profile__twoot" v-for = "twoot in user.twoots" v-bind:key="twoot.id"> 
-                {{ twoot.content }}
-            </div>
+            <TwootItem 
+                v-for="twoot in user.twoots" 
+                :key="twoot.id" 
+                :username="user.username" 
+                :twoot="twoot"
+                @favorite="toggleFavorite"
+            /> 
         </div>
     </div>
 </template>
 
 <script>
+import TwootItem from './TwootItem'
+
 export default {
     name: "UserProfile",
+    components: {
+        TwootItem
+    },
     data () {
     return {
       followers: 0,
@@ -56,6 +65,9 @@ export default {
   methods: {
     followUser() {
       this.followers++
+    },
+    toggleFavorite(id) {
+        console.log(`Favorited tweet with id ${id}`)
     }
   },
   mounted() {
@@ -64,7 +76,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .user-profile {
     display: grid;
     grid-template-columns: 1fr 3fr;
