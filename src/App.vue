@@ -32,13 +32,21 @@ export default {
       return `${this.user.firstName} ${this.user.lastName}`
     }
   },
+  watch: {
+    followers(newFollowerCount, oldFollowerCount) {
+      // watch is like useEffect with state/hooks dependency
+      if (oldFollowerCount < newFollowerCount) {
+        console.log(`${this.user.username} has gained a follower`)
+      }
+    }
+  },
   methods: {
     followUser() {
       this.followers++
     }
   },
   mounted() {
-      this.followUser();
+      this.followUser()
   }
 }
 </script>
