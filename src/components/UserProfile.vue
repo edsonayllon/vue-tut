@@ -2,6 +2,12 @@
     <div class = "user-profile">
         <div class = "user-profile__user-panel">
             <h1>@{{ user.username }}</h1>
+            <div class="user-profile__admin-badge" v-if = "user.isAdmin">
+                Admin
+            </div>
+            <div class="user-profile__admin-badge" v-else>
+                Not Admin
+            </div>
             <div class = "user-profile__follower-count">
             <strong>Followers:</strong> {{ followers }}
             </div>
@@ -65,5 +71,14 @@ export default {
     background-color: white;
     border-radius: 5px;
     border: 1px solid #DFE3E8;
+}
+
+.user-profile__admin-badge {
+    background: #454955;
+    border-radius: 6px;
+    margin-right: auto;
+    padding: 4px 6px;
+    color: white;
+    font-weight: bold;
 }
 </style>
