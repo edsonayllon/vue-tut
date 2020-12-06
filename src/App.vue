@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     @{{ user.username }} - {{ fullName }}
+    <strong>Followers</strong>
+    {{ followers }}
+    <button @click="followUser">Follow</button>
   </div>
 </template>
 
@@ -28,6 +31,11 @@ export default {
     fullName() {
       return `${this.user.firstName} ${this.user.lastName}`
     }
+  },
+  methods: {
+    followUser() {
+      this.followers++
+    }
   }
 }
 </script>
@@ -40,5 +48,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
