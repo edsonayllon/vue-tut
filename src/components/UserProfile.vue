@@ -11,6 +11,21 @@
             <div class = "user-profile__follower-count">
                 <strong>Followers:</strong> {{ followers }}
             </div>
+            <form class="user-profile__create-twoot" @submit.prevent="createNewTwoot"> 
+                <label for="newTwoot"><strong>New Twoot</strong></label>
+                <textarea id="newTwoot" rows="3" v-model="newTwootContent" />
+                <div class="user-profile__create-twoot-type">
+                    <label for="newTwootType"><strong>Type: </strong></label>
+                    <select id="newTwootType" v-model="selectedTwootType">
+                        <option :value="option.value" v-for="(option, index) in twootTypes" :key="index">
+                            {{ option.name }}
+                        </option>
+                    </select>
+                </div>
+                <button>
+                    Twoot!
+                </button>
+            </form>
         </div>
         <div class = "user-profile__twoots-wrapper">
             <TwootItem 
@@ -34,19 +49,25 @@ export default {
     },
     data () {
     return {
-      followers: 0,
-      user: {
-        id: 1,
-        username: 'relativeread',
-        firstName: 'Edson',
-        lastName: 'Ayllon',
-        email: 'mail@edsonayllon.com',
-        isAdmin: true,
-        twoots: [
-          { id: 1, content: 'Twotter is amazing!' },
-          { id: 2, content: "Don't forget to follow" }
-        ]
-      }
+        newTwootContent: '',
+        selectedTwootType: 'instant',
+        twootTypes: [
+            { value: 'draft', name: 'Draft' },
+            { value: 'instant', name: 'Instant Twoot' }
+        ],
+        followers: 0,
+        user: {
+            id: 1,
+            username: 'relativeread',
+            firstName: 'Edson',
+            lastName: 'Ayllon',
+            email: 'mail@edsonayllon.com',
+            isAdmin: true,
+            twoots: [
+            { id: 1, content: 'Twotter is amazing!' },
+            { id: 2, content: "Don't forget to follow" }
+            ]
+        }
     }
   },
   computed: {
@@ -68,6 +89,15 @@ export default {
     },
     toggleFavorite(id) {
         console.log(`Favorited tweet with id ${id}`)
+    },
+    createNewTwoot() {
+        if (this.newTwootContent && this.selectedTwootType !== 'draft') {
+            this.user.twoots.unshift({
+                id: this.user.twoots.length + 1,
+                content: this.newTwootContent
+            })
+            this.newTwootContent = ''
+        }
     }
   },
   mounted() {
@@ -95,11 +125,17 @@ export default {
 }
 
 .user-profile__admin-badge {
-    background: #454955;
+    background: rebeccapurple;
     border-radius: 6px;
     margin-right: auto;
     padding: 4px 6px;
     color: white;
     font-weight: bold;
+}
+
+.user-profile__create-twoot {
+    display: flex;
+    flex-direction: column;
+    padding-top: 16px;
 }
 </style>
